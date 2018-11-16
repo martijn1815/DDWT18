@@ -121,9 +121,9 @@ function get_error($feedback){
 }
 
 /* Initializing a DB connection */
-function connect_db($host, $db, $user, $pass){
+function connect_db($host, $dbn, $user, $pass){
     $charset = 'utf8mb4';
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    $dsn = "mysql:host=$host;dbname=$dbn;charset=$charset";
     $options = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -134,4 +134,10 @@ function connect_db($host, $db, $user, $pass){
         echo sprintf("Failed to connect. %s", $e->getMessage());
     }
     return $pdo;
+}
+
+/* Return the number of series listed in the database */
+function count_series($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM series WHERE id = ?') ;
+    return $stmt->rowCount() ;
 }
