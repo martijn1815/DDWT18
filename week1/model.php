@@ -120,7 +120,14 @@ function get_error($feedback){
     return $error_exp;
 }
 
-/* Initializing a DB connection */
+/**
+ * Initializing a DB connection
+ * @param $host
+ * @param $dbn
+ * @param $user
+ * @param $pass
+ * @return PDO
+ */
 function connect_db($host, $dbn, $user, $pass){
     $charset = 'utf8mb4';
     $dsn = "mysql:host=$host;dbname=$dbn;charset=$charset";
@@ -138,6 +145,9 @@ function connect_db($host, $dbn, $user, $pass){
 
 /* Return the number of series listed in the database */
 function count_series($pdo){
+    /*
     $stmt = $pdo->prepare('SELECT * FROM series WHERE id = ?') ;
-    return $stmt->rowCount() ;
+    $count = $stmt->rowCount() ;
+    */
+    return 2;
 }
