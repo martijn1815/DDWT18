@@ -120,6 +120,7 @@ function get_error($feedback){
     return $error_exp;
 }
 
+/* Initializing a DB connection */
 function connect_db($host, $db, $user, $pass){
     $charset = 'utf8mb4';
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
