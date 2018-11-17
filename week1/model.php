@@ -144,7 +144,12 @@ function connect_db($host, $dbn, $user, $pass){
     return $pdo;
 }
 
-/* Return the number of series listed in the database */
+/**
+ * Return the number of series listed in the database
+ * @var PDO
+ * @param $pdo
+ * @return mixed
+ */
 function count_series($pdo){
     $stmt = $pdo->prepare('SELECT * FROM series WHERE id = ?') ;
     $stmt->execute();
