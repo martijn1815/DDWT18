@@ -137,6 +137,7 @@ function connect_db($host, $dbn, $user, $pass){
     ];
     try {
         $pdo = new PDO($dsn, $user, $pass, $options);
+        echo "Connected successfully";
     } catch (\PDOException $e) {
         echo sprintf("Failed to connect. %s", $e->getMessage());
     }
@@ -145,9 +146,7 @@ function connect_db($host, $dbn, $user, $pass){
 
 /* Return the number of series listed in the database */
 function count_series($pdo){
-    /*
-    $stmt = $pdo->prepare('SELECT * FROM series WHERE id = ?') ;
-    $count = $stmt->rowCount() ;
-    */
-    return 2;
+    $stmt = $pdo->query('SELECT * FROM series WHERE id = ?') ;
+    $stmt->execute();
+    return $stmt->rowCount() ;
 }

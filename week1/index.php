@@ -10,7 +10,7 @@ include 'model.php';
 
 /* Connect to DB */
 $db = connect_db('localhost', 'ddwt18_week1', 'ddwt18','ddwt18');
-$count = count_series($db);
+$count_series = count_series($db);
 
 /* Landing page */
 if (new_route('/DDWT18/week1/', 'get')) {
