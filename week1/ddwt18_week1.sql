@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Gegenereerd op: 16 nov 2018 om 11:16
+-- Gegenereerd op: 17 nov 2018 om 22:04
 -- Serverversie: 5.7.23
 -- PHP-versie: 7.2.10
 
