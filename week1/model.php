@@ -202,6 +202,7 @@ function get_series_table($series){
 }
 
 /**
+ * Returns the information of a series with a specific series id
  * @param PDO $pdo database object
  * @param $serie_id
  * @return mixed
