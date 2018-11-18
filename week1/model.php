@@ -192,7 +192,7 @@ function get_series_table($series){
     foreach($series as $serie){
         $row = '<tr>
                     <th scope="row">'.$serie["name"].'</th>
-                    <td><a href="/DDWT18/week1/serie/'.$serie["id"].'" role="button" class="btn btn-primary">More info</a></td>
+                    <td><a href="/DDWT18/week1/serie/?serie_id='.$serie["id"].'" role="button" class="btn btn-primary">More info</a></td>
                 </tr>';
         $table = $table.$row;
     }
