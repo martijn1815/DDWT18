@@ -200,3 +200,20 @@ function get_series_table($series){
                      </table>';
     return $table;
 }
+
+/**
+ * @param PDO $pdo database object
+ * @param $serie_id
+ * @return mixed
+ */
+function get_series_info($pdo, $serie_id){
+    $stmt = $pdo->prepare('SELECT * FROM series WHERE id = ?');
+    $stmt->execute([$serie_id]);
+    $serie_info = $stmt->fetch();
+
+    /* Run htmlspecialchars on all values in array */
+    foreach($serie_info as $key => $value){
+        $serie_info[$key] = htmlspecialchars($value);
+    }
+    return $serie_info;
+}
