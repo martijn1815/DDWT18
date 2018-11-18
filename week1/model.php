@@ -175,6 +175,28 @@ function get_series($pdo){
     return $series;
 }
 
-function get_series_table(){
-    return true;
+/**
+ * Returns a string with the HTML code representing the table with all the series
+ * @param $series
+ * @return string
+ */
+function get_series_table($series){
+    $table = '<table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Series</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>';
+    foreach($series as $serie){
+        $row = '<tr>
+                    <th scope="row">'.$serie["name"].'</th>
+                    <td><a href="/DDWT18/week1/serie/'.$serie["id"].'" role="button" class="btn btn-primary">More info</a></td>
+                </tr>';
+        $table = $table.$row;
+    }
+    $table = $table.'</tbody>
+                     </table>';
+    return $table;
 }
