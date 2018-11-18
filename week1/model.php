@@ -157,13 +157,22 @@ function count_series($pdo){
 }
 
 /**
- * @param PDO $pdo
+ * Returns an associative array with all the series listed in the database
+ * @param PDO $pdo database object
+ * @return mixed
  */
 function get_series($pdo){
     $stmt = $pdo->prepare('SELECT * FROM series');
     $stmt->execute();
-    $serie_info = $stmt->fetchAll();
-    var_dump($serie_info);
+    $series = $stmt->fetchAll();
+
+    /* Run htmlspecialchars on all values in array */
+    foreach($series as $key1 => $serie){
+        foreach($serie as $key2 => $value) {
+            $series[$key1][$key2] = htmlspecialchars($value);
+        }
+    }
+    return $series;
 }
 
 function get_series_table(){
