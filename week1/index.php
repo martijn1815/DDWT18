@@ -51,6 +51,7 @@ elseif (new_route('/DDWT18/week1/overview/', 'get')) {
         'Add Series' => na('/DDWT18/week1/add/', False)
     ]);
 
+    get_series($db);
     /* Page content */
     $right_column = use_template('cards');
     $page_subtitle = 'The overview of all series';
