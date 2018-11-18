@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Gegenereerd op: 17 nov 2018 om 22:04
+-- Gegenereerd op: 18 nov 2018 om 16:37
 -- Serverversie: 5.7.23
 -- PHP-versie: 7.2.10
 
@@ -33,6 +33,14 @@ CREATE TABLE `series` (
   `seasons` int(11) NOT NULL,
   `abstract` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `series`
+--
+
+INSERT INTO `series` (`id`, `name`, `creator`, `seasons`, `abstract`) VALUES
+(1, 'House of Cards', 'Beau Willimon', 6, 'A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him.'),
+(2, 'Game of Thrones', 'David Benioff', 7, 'Game of Thrones is an American fantasy drama television series created by David Benioff and D. B. Weiss.');
 
 --
 -- Indexen voor geëxporteerde tabellen
