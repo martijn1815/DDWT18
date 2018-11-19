@@ -117,6 +117,7 @@ elseif (new_route('/DDWT18/week1/add/', 'get')) {
     $submit_btn = "Add Series";
     $form_action = '/DDWT18/week1/add/';
 
+
     /* Choose Template */
     include use_template('new');
 }
