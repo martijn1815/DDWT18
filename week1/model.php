@@ -276,3 +276,68 @@ function add_series($pdo, $form_serie_info){
         ];
     }
 }
+
+/**
+ * Update serie info in database
+ * @param PDO $pdo database object
+ * @param $form_serie_info
+ * @return array
+ */
+function update_series($pdo, $form_serie_info){
+    /* Check if all fields are set */
+    if (
+        empty($form_serie_info['Id']) or
+        empty($form_serie_info['Name']) or
+        empty($form_serie_info['Creator']) or
+        empty($form_serie_info['Seasons']) or
+        empty($form_serie_info['Abstract'])
+    ) {
+        return [
+            'type' => 'danger',
+            'message' => 'Error; Not all fields were filled in.'
+        ];
+    }
+    /* Check data type for Seasons */
+    if (!is_numeric($form_serie_info['Seasons'])) {
+        return [
+            'type' => 'danger',
+            'message' => 'Error; Input for Seasons must be numeric'
+        ];
+    }
+    /* Check if Name already in Database */
+    $stmt = $pdo->prepare('SELECT * FROM series WHERE id = ?');
+    $stmt->execute([$form_serie_info['Id']]);
+    $serie = $stmt->fetch();
+    $current_name = $serie['name'];
+
+    $stmt = $pdo->prepare('SELECT * FROM series WHERE name = ?');
+    $stmt->execute([$form_serie_info['Name']]);
+    $serie = $stmt->fetch();
+    if ($serie_info['Name'] == $serie['name'] and $serie['name'] == $current_name) {
+        return [
+            'type' => 'danger',
+            'message' => sprintf('Error; Series cannnot be changed. %s already exists', $serie_info['Name'])
+        ];
+    }
+    /* Add serie to Database */
+    $stmt = $pdo->prepare('UPDATE series SET name = ?, creator = ?, seasons = ?, abstract = ? WHERE id = ?');
+    $stmt->execute([
+        $form_serie_info['Name'],
+        $form_serie_info['Creator'],
+        $form_serie_info['Seasons'],
+        $form_serie_info['Abstract'],
+        $form_serie_info['Id']
+    ]);
+    $inserted = $stmt->rowCount();
+    if ($inserted == 1) {
+        return [
+            'type' => 'success',
+            'message' => 'Series '.$form_serie_info['Name'].' added to database'
+        ];
+    } else {
+        return [
+            'type' => 'danger',
+            'message' => 'Error; The serie was not added to database. Try again.'
+        ];
+    }
+}
