@@ -246,10 +246,10 @@ function add_series($pdo, $form_serie_info){
         ];
     }
     /* Check if Name already in Database */
-    $stmt = $pdo->prepare('SELECT name FROM series');
-    $stmt->execute();
-    $name_list = $stmt->fetch();
-    if (in_array($form_serie_info['Name'], $name_list)) {
+    $stmt = $pdo->prepare('SELECT * FROM series WHERE name = ?');
+    $stmt->execute( $form_serie_info['Name']);
+    $serie_exists = $stmt->rowCount();
+    if ($serie_exists) {
         return [
             'type' => 'danger',
             'message' => 'Error; Name already in database'
