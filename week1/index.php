@@ -182,9 +182,17 @@ elseif (new_route('/DDWT18/week1/edit/', 'get')) {
 
 /* Edit serie POST */
 elseif (new_route('/DDWT18/week1/edit/', 'post')) {
-    /* Get series from db */
-    $serie_id = $_POST["serie_id"];
+    $feedback = update_series($db, $_POST);
+    get_error($feedback);
+
+    /* Get serie info from db */
+    $serie_id = $_POST["Id"];
     $serie_info = get_series_info($db, $serie_id);
+
+    $serie_name = $serie_info['name'];
+    $serie_abstract = $serie_info['abstract'];
+    $nbr_seasons = $serie_info['seasons'];
+    $creators = $serie_info['creator'];
 
     /* Page info */
     $page_title = $serie_info['name'];
@@ -192,7 +200,7 @@ elseif (new_route('/DDWT18/week1/edit/', 'post')) {
         'DDWT18' => na('/DDWT18/', False),
         'Week 1' => na('/DDWT18/week1/', False),
         'Overview' => na('/DDWT18/week1/overview/', False),
-        $serie_info['name'] => na('/DDWT18/week1/serie/', True)
+        $serie_name => na('/DDWT18/week1/serie/', True)
     ]);
     $navigation = get_navigation([
         'Home' => na('/DDWT18/week1/', False),
@@ -202,10 +210,8 @@ elseif (new_route('/DDWT18/week1/edit/', 'post')) {
 
     /* Page content */
     $right_column = use_template('cards');
-    $page_subtitle = sprintf("Information about %s", $serie_info['name']);
+    $page_subtitle = sprintf("Information about %s", $serie_name);
     $page_content = $serie_info['abstract'];
-    $feedback = update_series($db, $_POST);
-    get_error($feedback);
 
     /* Choose Template */
     include use_template('serie');
