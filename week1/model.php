@@ -313,7 +313,7 @@ function update_series($pdo, $form_serie_info){
     $stmt = $pdo->prepare('SELECT * FROM series WHERE name = ?');
     $stmt->execute([$form_serie_info['Name']]);
     $serie = $stmt->fetch();
-    if ($serie_info['Name'] == $serie['name'] and $serie['name'] == $current_name) {
+    if ($form_serie_info['Name'] == $serie['name'] and $serie['name'] == $current_name) {
         return [
             'type' => 'danger',
             'message' => sprintf('Error; Series cannnot be changed. %s already exists', $serie_info['Name'])
