@@ -226,6 +226,12 @@ function get_series_info($pdo, $serie_id){
  * @return array
  */
 function add_series($pdo, $form_serie_info){
+    var_dump([
+        $form_serie_info['Name'],
+        $form_serie_info['Creator'],
+        $form_serie_info['Seasons'],
+        $form_serie_info['Abstract']
+    ]);
     /* Check if all fields are set */
     if (
         empty($form_serie_info['Name']) or
@@ -247,7 +253,7 @@ function add_series($pdo, $form_serie_info){
     }
     /* Check if Name already in Database */
     $stmt = $pdo->prepare('SELECT * FROM series WHERE name = ?');
-    $stmt->execute( $form_serie_info['Name']);
+    $stmt->execute([$form_serie_info['Name']]);
     $serie_exists = $stmt->rowCount();
     if ($serie_exists) {
         return [

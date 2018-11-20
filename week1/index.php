@@ -117,7 +117,6 @@ elseif (new_route('/DDWT18/week1/add/', 'get')) {
     $submit_btn = "Add Series";
     $form_action = '/DDWT18/week1/add/';
 
-
     /* Choose Template */
     include use_template('new');
 }
@@ -143,7 +142,11 @@ elseif (new_route('/DDWT18/week1/add/', 'post')) {
     $page_content = 'Fill in the details of you favorite series.';
     $submit_btn = "Add Series";
     $form_action = '/DDWT18/week1/add/';
+    $feedback = add_series($db, $_POST);
+    $get_error($feedback);
 
+
+    /* Choose Template */
     include use_template('new');
 }
 
