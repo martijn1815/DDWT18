@@ -143,7 +143,7 @@ elseif (new_route('/DDWT18/week1/add/', 'post')) {
     $submit_btn = "Add Series";
     $form_action = '/DDWT18/week1/add/';
     $feedback = add_series($db, $_POST);
-    $get_error($feedback);
+    get_error($feedback);
 
 
     /* Choose Template */

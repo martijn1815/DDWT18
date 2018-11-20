@@ -226,12 +226,6 @@ function get_series_info($pdo, $serie_id){
  * @return array
  */
 function add_series($pdo, $form_serie_info){
-    var_dump([
-        $form_serie_info['Name'],
-        $form_serie_info['Creator'],
-        $form_serie_info['Seasons'],
-        $form_serie_info['Abstract']
-    ]);
     /* Check if all fields are set */
     if (
         empty($form_serie_info['Name']) or
