@@ -152,18 +152,16 @@ elseif (new_route('/DDWT18/week1/add/', 'post')) {
 
 /* Edit serie GET */
 elseif (new_route('/DDWT18/week1/edit/', 'get')) {
-    /* Get serie info from db */
-    $serie_name = 'House of Cards';
-    $serie_abstract = 'A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him.';
-    $nbr_seasons = '6';
-    $creators = 'Beau Willimon';
+    /* Get series from db */
+    $serie_id = $_GET["serie_id"];
+    $serie_info = get_series_info($db, $serie_id);
 
     /* Page info */
     $page_title = 'Edit Series';
     $breadcrumbs = get_breadcrumbs([
         'DDWT18' => na('/DDWT18/', False),
         'Week 1' => na('/DDWT18/week1/', False),
-        sprintf("Edit Series %s", $serie_name) => na('/DDWT18/week1/new/', True)
+        sprintf("Edit Series %s", $serie_info["name"]) => na('/DDWT18/week1/new/', True)
     ]);
     $navigation = get_navigation([
         'Home' => na('/DDWT18/week1/', False),
@@ -173,8 +171,10 @@ elseif (new_route('/DDWT18/week1/edit/', 'get')) {
 
     /* Page content */
     $right_column = use_template('cards');
-    $page_subtitle = sprintf("Edit %s", $serie_name);
+    $page_subtitle = sprintf("Edit %s", $serie_info["name"]);
     $page_content = 'Edit the series below.';
+    $submit_btn = "Edit Series";
+    $form_action = '/DDWT18/week1/edit/';
 
     /* Choose Template */
     include use_template('new');

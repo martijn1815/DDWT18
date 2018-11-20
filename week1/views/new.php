@@ -35,28 +35,31 @@
                     <p><?= $page_content ?></p>
                     <!-- Put your form here -->
                     <form action="<?= $form_action ?>" method="POST">
+                        <?php if($page_title = 'Edit Series' and isset($serie_info)){
+                            echo sprintf('<input type="hidden" class="form-control" id="inputId" name="Id" value="%s" required>', $serie_info['id']);
+                        } ?>
                         <div class="form-group row">
                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputName" name="Name" required>
+                                <input type="text" class="form-control" id="inputName" name="Name" value="<?php if (isset($serie_info)){echo $serie_info['name'];} ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputCreator" class="col-sm-2 col-form-label">Creator</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputCreator" name="Creator" required>
+                                <input type="text" class="form-control" id="inputCreator" name="Creator" value="<?php if (isset($serie_info)){echo $serie_info['creator'];} ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputSeasons" class="col-sm-2 col-form-label">Seasons</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" id="inputSeasons" name="Seasons" required>
+                                <input type="number" class="form-control" id="inputSeasons" name="Seasons" value="<?php if (isset($serie_info)){echo $serie_info['seasons'];} ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputAbstract" class="col-sm-2 col-form-label">Abstract</label>
                             <div class="col-sm-10">
-                                <input type="textarea" class="form-control" id="inputAbstract" name="Abstract" required>
+                                <input type="textarea" class="form-control" id="inputAbstract" name="Abstract" value="<?php if (isset($serie_info)){echo $serie_info['abstract'];} ?>" required>
                             </div>
                         </div>
                         <div class="col-sm-10">
