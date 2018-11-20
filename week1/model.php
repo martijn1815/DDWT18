@@ -218,3 +218,61 @@ function get_series_info($pdo, $serie_id){
     }
     return $serie_info;
 }
+
+/**
+ * Add a serie to the database
+ * @param PDO $pdo database object
+ * @param $form_serie_info
+ * @return array
+ */
+function add_series($pdo, $form_serie_info){
+    /* Check if all fields are set */
+    if (
+        empty($form_serie_info['Name']) or
+        empty($form_serie_info['Creator']) or
+        empty($form_serie_info['Seasons']) or
+        empty($form_serie_info['Abstract'])
+    ) {
+        return [
+            'type' => 'danger',
+            'message' => 'Error; Not all fields were filled in.'
+        ];
+    }
+    /* Check data type for Seasons */
+    if (!is_numeric($form_serie_info['Seasons'])) {
+        return [
+            'type' => 'danger',
+            'message' => 'Error; Input for Seasons must be numeric'
+        ];
+    }
+    /* Check if Name already in Database */
+    $stmt = $pdo->prepare('SELECT name FROM series');
+    $stmt->execute();
+    $name_list = $stmt->fetch();
+    if (in_array($form_serie_info['Name'], $name_list)) {
+        return [
+            'type' => 'danger',
+            'message' => 'Error; Name already in database'
+        ];
+    }
+    /* Add serie to Database */
+    $stmt = $pdo->prepare('INSERT INTO series (name, creator, seasons, abstract) VALUES(?, ?, ?, ?)');
+    $stmt->execute([
+        $form_serie_info['Name'],
+        $form_serie_info['Creator'],
+        $form_serie_info['Seasons'],
+        $form_serie_info['Abstract']
+    ]);
+    $inserted = $stmt->rowCount();
+    if ($inserted == 1) {
+        return [
+            'type' => 'success',
+            'message' => sprintf('Series '%s' added to database', $form_serie_info['Name'])
+        ];
+    } else {
+        return [
+            'type' => 'danger',
+            'message' => 'Error; The serie was not added to database. Try again.'
+        ];
+    }
+}
