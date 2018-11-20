@@ -267,7 +267,7 @@ function add_series($pdo, $form_serie_info){
     if ($inserted == 1) {
         return [
             'type' => 'success',
-            'message' => sprintf('Series '%s' added to database', $form_serie_info['Name'])
+            'message' => 'Series '.$form_serie_info['Name'].' added to database'
         ];
     } else {
         return [
