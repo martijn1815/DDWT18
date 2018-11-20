@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Gegenereerd op: 18 nov 2018 om 16:37
+-- Gegenereerd op: 20 nov 2018 om 13:41
 -- Serverversie: 5.7.23
 -- PHP-versie: 7.2.10
 
@@ -51,6 +51,16 @@ INSERT INTO `series` (`id`, `name`, `creator`, `seasons`, `abstract`) VALUES
 --
 ALTER TABLE `series`
   ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT voor geëxporteerde tabellen
+--
+
+--
+-- AUTO_INCREMENT voor een tabel `series`
+--
+ALTER TABLE `series`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
