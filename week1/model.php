@@ -267,7 +267,7 @@ function add_series($pdo, $form_serie_info){
     if ($inserted == 1) {
         return [
             'type' => 'success',
-            'message' => 'Series '.$form_serie_info['Name'].' added to database'
+            'message' => 'Serie '.$form_serie_info['Name'].' added to database.'
         ];
     } else {
         return [
@@ -316,7 +316,7 @@ function update_series($pdo, $form_serie_info){
     if ($form_serie_info['Name'] == $serie['name'] and $serie['name'] == $current_name) {
         return [
             'type' => 'danger',
-            'message' => sprintf('Error; Series cannnot be changed. %s already exists', $serie_info['Name'])
+            'message' => 'Error; Series cannnot be changed. '.$form_serie_info['Name'].' already exists'
         ];
     }
     /* Add serie to Database */
@@ -332,12 +332,38 @@ function update_series($pdo, $form_serie_info){
     if ($inserted == 1) {
         return [
             'type' => 'success',
-            'message' => 'Series '.$form_serie_info['Name'].' added to database'
+            'message' => 'Serie '.$form_serie_info['Name'].' updated in database.'
         ];
     } else {
         return [
             'type' => 'danger',
-            'message' => 'Error; The serie was not added to database. Try again.'
+            'message' => 'Error; The serie was not updated in the database. Try again.'
+        ];
+    }
+}
+
+/**
+ * @param PDO $pdo database object
+ * @param $serie_id
+ * @return array
+ */
+function remove_serie($pdo, $serie_id){
+    /* Get serie info */
+    $serie_info = get_series_info($pdo, $serie_id);
+
+    /* Remove serie from database */
+    $stmt = $pdo->prepare('DELETE FROM series WHERE id = ?');
+    $stmt->execute([$serie_id]);
+    $deleted = $stmt->rowCount();
+    if ($deleted == 1) {
+        return [
+            'type' => 'succes',
+            'message' => 'Serie '.$serie_info['Name'].' is removed from database.'
+        ];
+    } else {
+        return [
+            'type' => 'danger',
+            'message' => 'Error; The serie was not removed from the database. Try again.'
         ];
     }
 }
