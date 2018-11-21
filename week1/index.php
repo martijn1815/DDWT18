@@ -10,7 +10,6 @@ include 'model.php';
 
 /* Connect to DB */
 $db = connect_db('localhost', 'ddwt18_week1', 'ddwt18','ddwt18');
-$count_series = count_series($db);
 
 /* Landing page */
 if (new_route('/DDWT18/week1/', 'get')) {
@@ -28,6 +27,7 @@ if (new_route('/DDWT18/week1/', 'get')) {
     ]);
 
     /* Page content */
+    $count_series = count_series($db);
     $right_column = use_template('cards');
     $page_subtitle = 'The online platform to list your favorite series';
     $page_content = 'On Series Overview you can list your favorite series. You can see the favorite series of all Series Overview users. By sharing your favorite series, you can get inspired by others and explore new series.';
@@ -52,6 +52,7 @@ elseif (new_route('/DDWT18/week1/overview/', 'get')) {
     ]);
 
     /* Page content */
+    $count_series = count_series($db);
     $right_column = use_template('cards');
     $page_subtitle = 'The overview of all series';
     $page_content = 'Here you find all series listed on Series Overview.';
@@ -87,6 +88,7 @@ elseif (new_route('/DDWT18/week1/serie/', 'get')) {
     ]);
 
     /* Page content */
+    $count_series = count_series($db);
     $right_column = use_template('cards');
     $page_subtitle = sprintf("Information about %s", $serie_name);
     $page_content = $serie_abstract;
@@ -111,6 +113,7 @@ elseif (new_route('/DDWT18/week1/add/', 'get')) {
     ]);
 
     /* Page content */
+    $count_series = count_series($db);
     $right_column = use_template('cards');
     $page_subtitle = 'Add your favorite series';
     $page_content = 'Fill in the details of you favorite series.';
@@ -137,6 +140,7 @@ elseif (new_route('/DDWT18/week1/add/', 'post')) {
     ]);
 
     /* Page content */
+    $count_series = count_series($db);
     $right_column = use_template('cards');
     $page_subtitle = 'Add your favorite series';
     $page_content = 'Fill in the details of you favorite series.';
@@ -170,6 +174,7 @@ elseif (new_route('/DDWT18/week1/edit/', 'get')) {
     ]);
 
     /* Page content */
+    $count_series = count_series($db);
     $right_column = use_template('cards');
     $page_subtitle = sprintf("Edit %s", $serie_info["name"]);
     $page_content = 'Edit the series below.';
@@ -209,6 +214,7 @@ elseif (new_route('/DDWT18/week1/edit/', 'post')) {
     ]);
 
     /* Page content */
+    $count_series = count_series($db);
     $right_column = use_template('cards');
     $page_subtitle = sprintf("Information about %s", $serie_name);
     $page_content = $serie_info['abstract'];
@@ -238,6 +244,7 @@ elseif (new_route('/DDWT18/week1/remove/', 'post')) {
     ]);
 
     /* Page content */
+    $count_series = count_series($db);
     $right_column = use_template('cards');
     $page_subtitle = 'The overview of all series';
     $page_content = 'Here you find all series listed on Series Overview.';

@@ -267,7 +267,7 @@ function add_series($pdo, $form_serie_info){
     if ($inserted == 1) {
         return [
             'type' => 'success',
-            'message' => 'Serie '.$form_serie_info['Name'].' added to database.'
+            'message' => 'Serie '.$form_serie_info['name'].' added to database.'
         ];
     } else {
         return [
@@ -316,7 +316,7 @@ function update_series($pdo, $form_serie_info){
     if ($form_serie_info['Name'] == $serie['name'] and $serie['name'] == $current_name) {
         return [
             'type' => 'danger',
-            'message' => 'Error; Series cannnot be changed. '.$form_serie_info['Name'].' already exists'
+            'message' => 'Error; Series cannnot be changed. '.$form_serie_info['name'].' already exists'
         ];
     }
     /* Add serie to Database */
@@ -332,7 +332,7 @@ function update_series($pdo, $form_serie_info){
     if ($inserted == 1) {
         return [
             'type' => 'success',
-            'message' => 'Serie '.$form_serie_info['Name'].' updated in database.'
+            'message' => 'Serie '.$form_serie_info['name'].' updated in database.'
         ];
     } else {
         return [
@@ -358,7 +358,7 @@ function remove_serie($pdo, $serie_id){
     if ($deleted == 1) {
         return [
             'type' => 'succes',
-            'message' => 'Serie '.$serie_info['Name'].' is removed from database.'
+            'message' => 'Serie '.$serie_info['name'].' is removed from database.'
         ];
     } else {
         return [
