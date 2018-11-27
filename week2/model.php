@@ -412,3 +412,16 @@ function get_user_id(){
         return False;
     }
 }
+
+/**
+ * Returns the name of a user based on a specific user id
+ * @param PDO $pdo
+ * @param $user_id
+ * @return string
+ */
+function get_user_name($pdo, $user_id){
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?');
+    $stmt->execute([$user_id]);
+    $user = $stmt->fetch();
+    return $user['firstname'].' '.$user['lastname'];
+}
