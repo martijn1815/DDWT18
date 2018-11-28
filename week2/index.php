@@ -229,9 +229,7 @@ elseif (new_route('/DDWT18/week2/register/', 'get')) {
     $navigation = get_navigation($template, 5);
 
     /* Page content */
-    $page_subtitle = 'The overview of your account';
-    $page_content = '';
-    $left_content = '';
+    $page_subtitle = 'Register on Series Overview!';
 
     /* Get error msg from POST route */
     if ( isset($_GET['error_msg']) ) {
@@ -244,22 +242,11 @@ elseif (new_route('/DDWT18/week2/register/', 'get')) {
 
 /* Register POST*/
 elseif (new_route('/DDWT18/week2/register/', 'post')) {
-    /* Page info */
-    $page_title = 'Register';
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 2' => na('/DDWT18/week2/', False),
-        'Register' => na('/DDWT18/week2/register', True)
-    ]);
-    $navigation = get_navigation($template, 5);
+    /* Register user */
+    $error_msg = register_user($db, $_POST);
 
-    /* Page content */
-    $page_subtitle = 'The overview of your account';
-    $page_content = '';
-    $left_content = '';
-
-    /* Choose Template */
-    include use_template('register');
+    /* Redirect to homepage */
+    redirect(sprintf('/DDWT18/week2/register/?error_msg=%s', json_encode($error_msg)));
 }
 
 /* Login GET */
