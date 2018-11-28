@@ -277,11 +277,10 @@ elseif (new_route('/DDWT18/week2/login/', 'get')) {
 /* Login POST */
 elseif (new_route('/DDWT18/week2/login/', 'post')) {
     /* Register user */
-    $error_msg = register_user($db, $_POST);
+    $error_msg = login_user($db, $_POST);
 
     /* Redirect to homepage */
     redirect(sprintf('/DDWT18/week2/login/?error_msg=%s', json_encode($error_msg)));
-}
 }
 
 /* Logout */
