@@ -30,7 +30,13 @@ $template = Array(
                     'url' => '/DDWT18/week2/myaccount/' ),
                 5 => Array(
                     'name' => 'Register',
-                    'url' => '/DDWT18/week2/register/'));
+                    'url' => '/DDWT18/week2/register/'),
+                6 => Array(
+                    'name' => 'Login',
+                    'url' => '/DDWT18/week2/login/'),
+                7 => Array(
+                    'name' => 'Logout',
+                    'url' => '/DDWT18/week2/logout/'));
 
 /* Landing page */
 if (new_route('/DDWT18/week2/', 'get')) {
@@ -184,6 +190,126 @@ elseif (new_route('/DDWT18/week2/remove/', 'post')) {
 
     /* Redirect to serie GET route */
     redirect(sprintf('/DDWT18/week2/overview/?error_msg=%s', json_encode($feedback)));
+}
+
+/* My account */
+elseif (new_route('/DDWT18/week2/myaccount/', 'get')) {
+    /* Page info */
+    $page_title = 'My Account';
+    $breadcrumbs = get_breadcrumbs([
+        'DDWT18' => na('/DDWT18/', False),
+        'Week 2' => na('/DDWT18/week2/', False),
+        'My Account' => na('/DDWT18/week2/myaccount', True)
+    ]);
+    $navigation = get_navigation($template, 4);
+
+    /* Page content */
+    $page_subtitle = 'The overview of your account';
+    $page_content = '';
+    $left_content = '';
+
+    /* Get error msg from POST route */
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+
+    /* Choose Template */
+    include use_template('account');
+}
+
+/* Register GET */
+elseif (new_route('/DDWT18/week2/register/', 'get')) {
+    /* Page info */
+    $page_title = 'Register';
+    $breadcrumbs = get_breadcrumbs([
+        'DDWT18' => na('/DDWT18/', False),
+        'Week 2' => na('/DDWT18/week2/', False),
+        'Register' => na('/DDWT18/week2/register', True)
+    ]);
+    $navigation = get_navigation($template, 5);
+
+    /* Page content */
+    $page_subtitle = 'The overview of your account';
+    $page_content = '';
+    $left_content = '';
+
+    /* Get error msg from POST route */
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+
+    /* Choose Template */
+    include use_template('register');
+}
+
+/* Register POST*/
+elseif (new_route('/DDWT18/week2/register/', 'post')) {
+    /* Page info */
+    $page_title = 'Register';
+    $breadcrumbs = get_breadcrumbs([
+        'DDWT18' => na('/DDWT18/', False),
+        'Week 2' => na('/DDWT18/week2/', False),
+        'Register' => na('/DDWT18/week2/register', True)
+    ]);
+    $navigation = get_navigation($template, 5);
+
+    /* Page content */
+    $page_subtitle = 'The overview of your account';
+    $page_content = '';
+    $left_content = '';
+
+    /* Choose Template */
+    include use_template('register');
+}
+
+/* Login GET */
+elseif (new_route('/DDWT18/week2/login/', 'get')) {
+    /* Page info */
+    $page_title = 'Register';
+    $breadcrumbs = get_breadcrumbs([
+        'DDWT18' => na('/DDWT18/', False),
+        'Week 2' => na('/DDWT18/week2/', False),
+        'Login' => na('/DDWT18/week2/login', True)
+    ]);
+    $navigation = get_navigation($template, 6);
+
+    /* Page content */
+    $page_subtitle = '';
+    $page_content = '';
+    $left_content = '';
+
+    /* Get error msg from POST route */
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+
+    /* Choose Template */
+    include use_template('login');
+}
+
+/* Login POST */
+elseif (new_route('/DDWT18/week2/login/', 'post')) {
+    /* Page info */
+    $page_title = 'Register';
+    $breadcrumbs = get_breadcrumbs([
+        'DDWT18' => na('/DDWT18/', False),
+        'Week 2' => na('/DDWT18/week2/', False),
+        'Login' => na('/DDWT18/week2/login', True)
+    ]);
+    $navigation = get_navigation($template, 6);
+
+    /* Page content */
+    $page_subtitle = '';
+    $page_content = '';
+    $left_content = '';
+
+    /* Choose Template */
+    include use_template('login');
+}
+
+/* Logout */
+elseif (new_route('/DDWT18/week2/logout/', 'get')) {
+
 }
 
 else {
