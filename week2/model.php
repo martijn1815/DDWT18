@@ -259,13 +259,19 @@ function add_serie($pdo, $serie_info){
         ];
     }
 
+    /* Get user info */
+    $stmt = $pdo->prepare('SELECT * FROM series WHERE username = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $user_info = $stmt->fetch();
+
     /* Add Serie */
-    $stmt = $pdo->prepare("INSERT INTO series (name, creator, seasons, abstract) VALUES (?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO series (name, creator, seasons, abstract, user) VALUES (?, ?, ?, ?, ?)");
     $stmt->execute([
         $serie_info['Name'],
         $serie_info['Creator'],
         $serie_info['Seasons'],
-        $serie_info['Abstract']
+        $serie_info['Abstract'],
+        $user_info['id']
     ]);
     $inserted = $stmt->rowCount();
     if ($inserted ==  1) {
@@ -317,6 +323,14 @@ function update_serie($pdo, $serie_info){
     $serie = $stmt->fetch();
     $current_name = $serie['name'];
 
+    /* Check if user is creator */
+    if ( !isset($_SESSION['user_id']) and $_SESSION['user_id'] != $serie['user']) {
+        return [
+            'type' => 'danger',
+            'message' => 'User is not creator of this serie'
+        ];
+    }
+
     /* Check if serie already exists */
     $stmt = $pdo->prepare('SELECT * FROM series WHERE name = ?');
     $stmt->execute([$serie_info['Name']]);
@@ -328,13 +342,19 @@ function update_serie($pdo, $serie_info){
         ];
     }
 
+    /* Get user info */
+    $stmt = $pdo->prepare('SELECT * FROM series WHERE username = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $user_info = $stmt->fetch();
+
     /* Update Serie */
-    $stmt = $pdo->prepare("UPDATE series SET name = ?, creator = ?, seasons = ?, abstract = ? WHERE id = ?");
+    $stmt = $pdo->prepare("UPDATE series SET name = ?, creator = ?, seasons = ?, abstract = ?, user = ? WHERE id = ?");
     $stmt->execute([
         $serie_info['Name'],
         $serie_info['Creator'],
         $serie_info['Seasons'],
         $serie_info['Abstract'],
+        $user_info['id'],
         $serie_info['serie_id']
     ]);
     $updated = $stmt->rowCount();
@@ -361,6 +381,14 @@ function update_serie($pdo, $serie_info){
 function remove_serie($pdo, $serie_id){
     /* Get series info */
     $serie_info = get_serieinfo($pdo, $serie_id);
+
+    /* Check if user is creator */
+    if ( !isset($_SESSION['user_id']) and $_SESSION['user_id'] != $serie_info['user']) {
+        return [
+            'type' => 'danger',
+            'message' => 'User is not creator of this serie'
+        ];
+    }
 
     /* Delete Serie */
     $stmt = $pdo->prepare("DELETE FROM series WHERE id = ?");
@@ -548,7 +576,7 @@ function login_user($pdo, $form_data){
             'message' => sprintf('There was an error: %s', $e->getMessage())
         ];
     }
-    if ($user_info['password'] != $form_data['password']){
+    if ( !password_verify($user_info['password'], $form_data['password']) ){
         return [
             'type' => 'danger',
             'message' => 'Password is incorrect'
@@ -557,10 +585,29 @@ function login_user($pdo, $form_data){
 
     /* Login user and redirect */
     session_start();
-    $_SESSION['user_id'] = $form_data['username'];
+    $_SESSION['user_id'] = $user_info['id'];
     $feedback = [
         'type' => 'success',
-        'message' => sprintf('%s successfully logged in!', get_username($pdo, $_SESSION['user_id']))
+        'message' => sprintf('%s, you were logged in successfully!', get_username($pdo, $_SESSION['user_id']))
     ];
     redirect(sprintf('/DDWT18/week2/myaccount/?error_msg=%s', json_encode($feedback)));
+}
+
+function check_login(){
+    session_start();
+    if (isset($_SESSION['user_id'])){
+        return True;
+    } else {
+        return False;
+    }
+}
+
+function logout_user(){
+    session_unset();
+    session_destroy();
+    $feedback = [
+        'type' => 'success',
+        'message' => 'You successfully logged out.'
+    ];
+    redirect(sprintf('/DDWT18/week2/?logout_msg=%s', json_encode($feedback)));
 }

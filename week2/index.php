@@ -53,6 +53,11 @@ if (new_route('/DDWT18/week2/', 'get')) {
     $page_subtitle = 'The online platform to list your favorite series';
     $page_content = 'On Series Overview you can list your favorite series. You can see the favorite series of all Series Overview users. By sharing your favorite series, you can get inspired by others and explore new series.';
 
+    /* Get error msg from logout */
+    if ( isset($_GET['logout_msg']) ) {
+        $error_msg = get_error($_GET['logout_msg']);
+    }
+
     /* Choose Template */
     include use_template('main');
 }
@@ -88,6 +93,13 @@ elseif (new_route('/DDWT18/week2/serie/', 'get')) {
     $serie_id = $_GET['serie_id'];
     $serie_info = get_serieinfo($db, $serie_id);
 
+    /* Check if user is creator */
+    if ( isset($_SESSION['user_id']) and $_SESSION['user_id'] == $serie_info['user']) {
+        $display_buttons = True;
+    } else {
+        $display_buttons = False;
+    }
+
     /* Page info */
     $page_title = $serie_info['name'];
     $breadcrumbs = get_breadcrumbs([
@@ -116,6 +128,11 @@ elseif (new_route('/DDWT18/week2/serie/', 'get')) {
 
 /* Add serie GET */
 elseif (new_route('/DDWT18/week2/add/', 'get')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/DDWT18/week2/login/');
+    }
+
     /* Page info */
     $page_title = 'Add Series';
     $breadcrumbs = get_breadcrumbs([
@@ -142,6 +159,11 @@ elseif (new_route('/DDWT18/week2/add/', 'get')) {
 
 /* Add serie POST */
 elseif (new_route('/DDWT18/week2/add/', 'post')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/DDWT18/week2/login/');
+    }
+
     /* Add serie to database */
     $feedback = add_serie($db, $_POST);
 
@@ -151,6 +173,11 @@ elseif (new_route('/DDWT18/week2/add/', 'post')) {
 
 /* Edit serie GET */
 elseif (new_route('/DDWT18/week2/edit/', 'get')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/DDWT18/week2/login/');
+    }
+
     /* Get serie info from db */
     $serie_id = $_GET['serie_id'];
     $serie_info = get_serieinfo($db, $serie_id);
@@ -176,6 +203,11 @@ elseif (new_route('/DDWT18/week2/edit/', 'get')) {
 
 /* Edit serie POST */
 elseif (new_route('/DDWT18/week2/edit/', 'post')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/DDWT18/week2/login/');
+    }
+
     /* Update serie in database */
     $feedback = update_serie($db, $_POST);
 
@@ -185,6 +217,11 @@ elseif (new_route('/DDWT18/week2/edit/', 'post')) {
 
 /* Remove serie */
 elseif (new_route('/DDWT18/week2/remove/', 'post')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/DDWT18/week2/login/');
+    }
+
     /* Remove serie in database */
     $feedback = remove_serie($db, $_POST['serie_id']);
 
@@ -194,6 +231,11 @@ elseif (new_route('/DDWT18/week2/remove/', 'post')) {
 
 /* My account */
 elseif (new_route('/DDWT18/week2/myaccount/', 'get')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/DDWT18/week2/login/');
+    }
+
     /* Page info */
     $page_title = 'My Account';
     $breadcrumbs = get_breadcrumbs([
@@ -204,9 +246,8 @@ elseif (new_route('/DDWT18/week2/myaccount/', 'get')) {
     $navigation = get_navigation($template, 4);
 
     /* Page content */
-    $page_subtitle = 'The overview of your account';
+    $page_subtitle = 'Account of '.$_SESSION['user_id'];
     $page_content = '';
-    $left_content = '';
 
     /* Get error msg from POST route */
     if ( isset($_GET['error_msg']) ) {
@@ -251,6 +292,11 @@ elseif (new_route('/DDWT18/week2/register/', 'post')) {
 
 /* Login GET */
 elseif (new_route('/DDWT18/week2/login/', 'get')) {
+    /* Check if logged in */
+    if ( check_login() ) {
+        redirect('/DDWT18/week2/myaccount/');
+    }
+
     /* Page info */
     $page_title = 'Login';
     $breadcrumbs = get_breadcrumbs([
@@ -285,7 +331,7 @@ elseif (new_route('/DDWT18/week2/login/', 'post')) {
 
 /* Logout */
 elseif (new_route('/DDWT18/week2/logout/', 'get')) {
-
+    logout_user();
 }
 
 else {
