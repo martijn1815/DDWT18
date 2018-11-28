@@ -66,6 +66,11 @@ elseif (new_route('/DDWT18/week2/overview/', 'get')) {
     $page_content = 'Here you find all series listed on Series Overview.';
     $left_content = get_serie_table($db, get_series($db));
 
+    /* Get error msg from POST route */
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+
     /* Choose Template */
     include use_template('main');
 }
