@@ -265,7 +265,7 @@ elseif (new_route('/DDWT18/week2/register/', 'post')) {
 /* Login GET */
 elseif (new_route('/DDWT18/week2/login/', 'get')) {
     /* Page info */
-    $page_title = 'Register';
+    $page_title = 'Login';
     $breadcrumbs = get_breadcrumbs([
         'DDWT18' => na('/DDWT18/', False),
         'Week 2' => na('/DDWT18/week2/', False),
@@ -290,7 +290,7 @@ elseif (new_route('/DDWT18/week2/login/', 'get')) {
 /* Login POST */
 elseif (new_route('/DDWT18/week2/login/', 'post')) {
     /* Page info */
-    $page_title = 'Register';
+    $page_title = 'Login';
     $breadcrumbs = get_breadcrumbs([
         'DDWT18' => na('/DDWT18/', False),
         'Week 2' => na('/DDWT18/week2/', False),
