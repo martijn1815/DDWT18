@@ -441,6 +441,11 @@ function count_users($pdo){
     return $series;
 }
 
+/**
+ * @param PDO $pdo
+ * @param $form_data
+ * @return array
+ */
 function register_user($pdo, $form_data){
     /* Check if all fields are set */
     if (
@@ -455,7 +460,7 @@ function register_user($pdo, $form_data){
         ];
     }
 
-    /* Check if serie already exists */
+    /* Check if user already exists */
     try {
         $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
         $stmt->execute([$form_data['username']]);
@@ -494,6 +499,68 @@ function register_user($pdo, $form_data){
     $feedback = [
         'type' => 'success',
         'message' => sprintf('%s, your account was successfully created!', get_username($pdo, $_SESSION['user_id']))
+    ];
+    redirect(sprintf('/DDWT18/week2/myaccount/?error_msg=%s', json_encode($feedback)));
+}
+
+/**
+ * @param PDO $pdo
+ * @param $form_data
+ */
+function login_user($pdo, $form_data){
+    /* Check if all fields are set */
+    if (
+        empty($form_data['username']) or
+        empty($form_data['password'])
+    ) {
+        return [
+            'type' => 'danger',
+            'message' => 'You should enter a username and password.'
+        ];
+    }
+
+    /* Check if user exists */
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
+        $stmt->execute([$form_data['username']]);
+        $user_exists = $stmt->rowCount();
+    } catch (\PDOException $e) {
+        return [
+            'type' => 'danger',
+            'message' => sprintf('There was an error: %s', $e->getMessage())
+        ];
+    }
+    if (empty($user_exists)){
+        return [
+            'type' => 'danger',
+            'message' => 'The username you entered does not exists!'
+        ];
+    }
+
+    /* Check password */
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
+        $stmt->execute([$form_data['username']]);
+        $user_info = $stmt->fetch();
+    } catch (\PDOException $e) {
+        return [
+            'type' => 'danger',
+            'message' => sprintf('There was an error: %s', $e->getMessage())
+        ];
+    }
+    if ($user_info['password'] != $form_data['password']){
+        return [
+            'type' => 'danger',
+            'message' => 'Password is incorrect'
+        ];
+    }
+
+    /* Login user and redirect */
+    session_start();
+    $_SESSION['user_id'] = $form_data['username'];
+    $feedback = [
+        'type' => 'success',
+        'message' => sprintf('%s successfully logged in!', get_username($pdo, $_SESSION['user_id']))
     ];
     redirect(sprintf('/DDWT18/week2/myaccount/?error_msg=%s', json_encode($feedback)));
 }

@@ -276,22 +276,12 @@ elseif (new_route('/DDWT18/week2/login/', 'get')) {
 
 /* Login POST */
 elseif (new_route('/DDWT18/week2/login/', 'post')) {
-    /* Page info */
-    $page_title = 'Login';
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 2' => na('/DDWT18/week2/', False),
-        'Login' => na('/DDWT18/week2/login', True)
-    ]);
-    $navigation = get_navigation($template, 6);
+    /* Register user */
+    $error_msg = register_user($db, $_POST);
 
-    /* Page content */
-    $page_subtitle = '';
-    $page_content = '';
-    $left_content = '';
-
-    /* Choose Template */
-    include use_template('login');
+    /* Redirect to homepage */
+    redirect(sprintf('/DDWT18/week2/login/?error_msg=%s', json_encode($error_msg)));
+}
 }
 
 /* Logout */
