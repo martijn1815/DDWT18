@@ -246,7 +246,8 @@ elseif (new_route('/DDWT18/week2/myaccount/', 'get')) {
     $navigation = get_navigation($template, 4);
 
     /* Page content */
-    $page_subtitle = 'Account of '.$_SESSION['user_id'];
+    $user = get_username($db, $_SESSION['user_id']);
+    $page_subtitle = '';
     $page_content = '';
 
     /* Get error msg from POST route */

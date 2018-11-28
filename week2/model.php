@@ -361,7 +361,7 @@ function update_serie($pdo, $serie_info){
     if ($updated ==  1) {
         return [
             'type' => 'success',
-            'message' => sprintf("Series '%s' was edited!", $serie_info['Name'])
+            'message' => sprintf("Series was edited!", $serie_info['Name'])
         ];
     }
     else {
