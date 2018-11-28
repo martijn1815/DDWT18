@@ -144,7 +144,7 @@ function get_serie_table($pdo, $series){
         $table_exp .= '
         <tr>
             <th scope="row">'.$value['name'].'</th>
-            <td>'.get_user_name($pdo, $value['id']).'</td>
+            <td>'.get_user_name($pdo, $value['user']).'</td>
             <td><a href="/DDWT18/week2/serie/?serie_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
         </tr>
         ';
@@ -426,4 +426,17 @@ function get_user_name($pdo, $user_id){
     $stmt->execute([$user_id]);
     $user = $stmt->fetch();
     return $user['firstname'].' '.$user['lastname'];
+}
+
+/**
+ * Return count of users in database
+ * @param PDO $pdo
+ * @return mixed
+ */
+function count_users($pdo){
+    /* Get series */
+    $stmt = $pdo->prepare('SELECT * FROM users');
+    $stmt->execute();
+    $series = $stmt->rowCount();
+    return $series;
 }

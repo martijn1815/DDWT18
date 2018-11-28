@@ -11,8 +11,9 @@ include 'model.php';
 /* Connect to DB */
 $db = connect_db('localhost', 'ddwt18_week2', 'ddwt18','ddwt18');
 
-/* Redundant code */
+/* General variables */
 $nbr_series = count_series($db);
+$nbr_users = count_users($db);
 $right_column = use_template('cards');
 $template = Array(
                 1 => Array(
