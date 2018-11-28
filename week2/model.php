@@ -144,7 +144,7 @@ function get_serie_table($pdo, $series){
         $table_exp .= '
         <tr>
             <th scope="row">'.$value['name'].'</th>
-            <td>'.get_user_name($pdo, $value['user']).'</td>
+            <td>'.get_username($pdo, $value['user']).'</td>
             <td><a href="/DDWT18/week2/serie/?serie_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
         </tr>
         ';
@@ -421,7 +421,7 @@ function get_user_id(){
  * @param $user_id
  * @return string
  */
-function get_user_name($pdo, $user_id){
+function get_username($pdo, $user_id){
     $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?');
     $stmt->execute([$user_id]);
     $user = $stmt->fetch();
