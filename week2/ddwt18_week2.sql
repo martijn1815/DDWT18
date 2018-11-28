@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Gegenereerd op: 27 nov 2018 om 00:54
+-- Gegenereerd op: 28 nov 2018 om 15:05
 -- Serverversie: 5.7.23
 -- PHP-versie: 7.2.10
 
@@ -37,6 +37,18 @@ CREATE TABLE `series` (
   `user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `series`
+--
+
+INSERT INTO `series` (`id`, `name`, `creator`, `seasons`, `abstract`, `user`) VALUES
+(1, 'House of Cards', 'Beau Willimon', 6, 'A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him.', 1),
+(2, 'Game of Thrones', 'David Benioff', 7, 'Game of Thrones is an American fantasy drama television series created by David Benioff and D. B. Weiss.', 1),
+(3, 'House of Cards', 'Beau Willimon', 6, 'A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him.', 1),
+(4, 'Game of Thrones', 'David Benioff', 7, 'Game of Thrones is an American fantasy drama television series created by David Benioff and D. B. Weiss.', 1),
+(5, 'House of Cards', 'Beau Willimon', 6, 'A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him.', 1),
+(6, 'Game of Thrones', 'David Benioff', 7, 'Game of Thrones is an American fantasy drama television series created by David Benioff and D. B. Weiss.', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -50,6 +62,13 @@ CREATE TABLE `users` (
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`) VALUES
+(1, 'martijn1815', '0000', 'Martijn', 'Schendstok');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -76,13 +95,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT voor een tabel `series`
 --
 ALTER TABLE `series`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
