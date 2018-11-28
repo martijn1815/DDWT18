@@ -94,7 +94,8 @@ elseif (new_route('/DDWT18/week2/serie/', 'get')) {
     $serie_info = get_serieinfo($db, $serie_id);
 
     /* Check if user is creator */
-    if ( isset($_SESSION['user_id']) and $_SESSION['user_id'] == $serie_info['user']) {
+    session_start();
+    if ( isset($_SESSION['user_id']) and ($serie_info['user'] == $_SESSION["user_id"]) ) {
         $display_buttons = True;
     } else {
         $display_buttons = False;

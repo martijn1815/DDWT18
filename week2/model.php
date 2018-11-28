@@ -576,7 +576,7 @@ function login_user($pdo, $form_data){
             'message' => sprintf('There was an error: %s', $e->getMessage())
         ];
     }
-    if ( !password_verify($user_info['password'], $form_data['password']) ){
+    if ( !password_verify($form_data['password'], $user_info['password']) ){
         return [
             'type' => 'danger',
             'message' => 'Password is incorrect'
@@ -603,6 +603,7 @@ function check_login(){
 }
 
 function logout_user(){
+    session_start();
     session_unset();
     session_destroy();
     $feedback = [
