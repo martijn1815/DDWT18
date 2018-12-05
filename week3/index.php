@@ -29,6 +29,17 @@ $router->mount('/api', function() use ($router, $db){
         echo json_encode($series);
     });
 
+    /* GET for reading individual series */
+    $router->get('/series/(\d+)', function($id) use ($db) {
+        $serie_info = get_serieinfo($db, $id);
+        echo json_encode($serie_info);
+    });
+
+    /* GET for deleting individual series */
+    $router->get('/series/delete/(\d+)', function($id) use ($db) {
+        $feedback = remove_serie($db, $id);
+        echo json_encode($feedback);
+    });
 
 });
 
