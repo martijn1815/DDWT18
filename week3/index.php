@@ -15,13 +15,24 @@ include 'model.php';
 /* Connect to DB */
 $db = connect_db('localhost', 'ddwt18_week3', 'ddwt18', 'ddwt18');
 
+/* Set credentials */
+$cred = set_cred('ddwt18', 'ddwt18');
+
 /* Create Router instance */
 $router = new \Bramus\Router\Router();
 
 // Add routes here
 /* mount for the API */
-$router->mount('/api', function() use ($router, $db){
+$router->mount('/api', function() use ($router, $db, $cred){
     http_content_type();
+
+    $router->before('GET|POST|PUT|DELETE', '/api/.*', function() use($cred) {
+        if (!check_cred($cred)) {
+            echo 'Authentication required.';
+            http_response_code(401);
+            exit();
+        }
+    });
 
     /* GET for reading all series */
     $router->get('/series', function() use ($db) {
@@ -35,8 +46,8 @@ $router->mount('/api', function() use ($router, $db){
         echo json_encode($serie_info);
     });
 
-    /* GET for deleting individual series */
-    $router->get('/series/delete/(\d+)', function($id) use ($db) {
+    /* DELETE for deleting individual series */
+    $router->delete('/series/(\d+)', function($id) use ($db) {
         $feedback = remove_serie($db, $id);
         echo json_encode($feedback);
     });
