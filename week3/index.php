@@ -41,6 +41,22 @@ $router->mount('/api', function() use ($router, $db){
         echo json_encode($feedback);
     });
 
+    /* POST for adding series */
+    $router->post('/series', function() use ($db) {
+        $feedback = add_serie($pdo, $_POST);
+        echo json_encode($feedback);
+    });
+
+    /* PUT for updating series */
+    $router->put('/series/(\d+)', function($id) use ($db) {
+        $_PUT = array();
+        parse_str(file_get_contents('php://input'), $_PUT);
+
+        $serie_info = $_PUT + ["serie_id" => $id];
+        $feedback = update_serie($db, $serie_info);
+        echo json_encode($feedback);
+    });
+
 });
 
 $router->set404(function() {
