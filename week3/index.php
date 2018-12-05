@@ -43,7 +43,7 @@ $router->mount('/api', function() use ($router, $db){
 
     /* POST for adding series */
     $router->post('/series', function() use ($db) {
-        $feedback = add_serie($pdo, $_POST);
+        $feedback = add_serie($db, $_POST);
         echo json_encode($feedback);
     });
 
